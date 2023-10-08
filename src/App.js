@@ -19,14 +19,6 @@ function App() {
     const [totalItems, setTotalItems] = useState(0);
     const [pageSize, setPageSize] = useState(10); 
     const [form] = Form.useForm();
-  
-    useEffect(() => {
-      fetchData();
-    }, [currentPage, pageSize]);
-    useEffect(() =>
-    {
-     setCurrentPage(1) 
-    },[totalItems])
     const fetchData = async () => {
       try {
         const response = await axios.get(`${SERVER_URL}?page=${currentPage}&limit=${pageSize}`);
@@ -39,6 +31,15 @@ function App() {
         });
       }
     };
+    useEffect(() => {
+      fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, pageSize]);
+    useEffect(() =>
+    {
+     setCurrentPage(1) 
+    },[totalItems])
+
   
     const handleTableChange = (pagination) => {
       setCurrentPage(pagination.current);
